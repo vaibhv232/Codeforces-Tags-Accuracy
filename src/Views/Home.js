@@ -212,7 +212,7 @@ const Home = () => {
                             return parseInt(accuracy) <=
                               parseInt(
                                 data.ratingObj.datasets[0].data[
-                                  Math.floor(data.ratingObj.labels.length / 5)
+                                Math.floor(data.ratingObj.labels.length / 5)
                                 ]
                               ) || totalSubmission <= threshold ? (
                               <Table.Row key={idx}>
@@ -241,7 +241,7 @@ const Home = () => {
                             return parseInt(accuracy) <=
                               parseInt(
                                 data.ratingObj.datasets[0].data[
-                                  Math.floor(data.ratingObj.labels.length / 5)
+                                Math.floor(data.ratingObj.labels.length / 5)
                                 ]
                               ) || totalSubmission <= threshold ? null : (
                               <Table.Row key={idx}>
@@ -267,7 +267,7 @@ const Home = () => {
               })}
           </Container>
         ) : null}
-        
+
 
         <Text
           h2

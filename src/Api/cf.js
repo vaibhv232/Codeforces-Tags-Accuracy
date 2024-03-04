@@ -49,8 +49,8 @@ function get_accuracy_obj_for_CharJS(obj, threshold = 1) {
 		if (correct_count + wrong_count >= threshold) {
 			finalObj.labels.push(
 				sorted_tags[i][0] +
-					" : " +
-					(correct_count + wrong_count).toString()
+				" : " +
+				(correct_count + wrong_count).toString()
 			);
 			total_submission.push(correct_count + wrong_count);
 			accuracy.push(
@@ -80,8 +80,8 @@ export async function get_questions_user(user) {
 	const data = await axios
 		.get(
 			"https://codeforces.com/api/user.status?handle=" +
-				user +
-				"&from=1&count=100000000"
+			user +
+			"&from=1&count=100000000"
 		)
 		.then((response) => {
 			return response.data;
@@ -130,8 +130,8 @@ export function get_tags_accuracy(data, threshold = 0) {
 		if (correct_count + wrong_count >= threshold) {
 			tags_obj.labels.push(
 				sorted_tags[i][0] +
-					" : " +
-					(correct_count + wrong_count).toString()
+				" : " +
+				(correct_count + wrong_count).toString()
 			);
 			accuracy.push(
 				parseFloat(

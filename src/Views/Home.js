@@ -53,14 +53,18 @@ const Home = () => {
     event.preventDefault();
     setTop(true);
 
-    get_questions_user(username).then((data) => {
+    try {
+      const data = await get_questions_user(username);
       setTagsInfo(get_tags_accuracy(data.result, 10));
       setRatingInfo(get_questions_accuracy(data.result, 10));
       setRatingTagsInfo(get_rating_tags_accuracy(data.result, 5));
 
       setShow(true);
-    });
+    } catch (error) {
+      alert("Invalid handle. Please enter a valid handle.");
+    }
   };
+
   return (
     <>
       <Helmet>

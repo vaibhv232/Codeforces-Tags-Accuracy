@@ -84,10 +84,14 @@ export async function get_questions_user(user) {
 			"&from=1&count=100000000"
 		)
 		.then((response) => {
+			if (response.data.status === "FAILED") {
+				throw new Error("Invalid handle");
+			}
 			return response.data;
 		});
 	return data;
 }
+
 
 /**
  * It takes an array of objects, and returns an object that contains accuracy for each respective tags which is used for creating a chart

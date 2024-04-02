@@ -21,12 +21,11 @@ import {
 import { PolarArea, Radar } from "react-chartjs-2";
 import { Helmet } from "react-helmet-async";
 import {
-  get_questions_user,
-  get_tags_accuracy,
-  get_questions_accuracy,
-  get_rating_tags_accuracy,
+  get_questions_user, // fun 0 -> initial
+  get_tags_accuracy, // fun1
+  get_questions_accuracy, // fun2
+  get_rating_tags_accuracy, // fun3
 } from "../Api/cf";
-
 ChartJS.register(
   ArcElement,
   Tooltip,
@@ -48,6 +47,18 @@ const Home = () => {
   const [tagsInfo, setTagsInfo] = useState([]);
   const [ratingInfo, setRatingInfo] = useState([]);
   const [ratingTagsInfo, setRatingTagsInfo] = useState([]);
+  const [totalQuestion, setTotalQuestion] = useState(0);
+  const [totalAccepted, setTotalAccepted] = useState(0);
+
+  function countResultsWithVerdict(results, verdict) {
+    let count = 0;
+    results.forEach((result) => {
+      if (result.verdict === verdict) {
+        count++;
+      }
+    });
+    return count;
+  }
 
   const _handleSubmit = async (event) => {
     event.preventDefault();
@@ -58,7 +69,13 @@ const Home = () => {
       setTagsInfo(get_tags_accuracy(data.result, 10));
       setRatingInfo(get_questions_accuracy(data.result, 10));
       setRatingTagsInfo(get_rating_tags_accuracy(data.result, 5));
+      setTotalQuestion(data.result.length);
 
+      console.log(data);
+      console.log(data.result.length);
+      let okCount = countResultsWithVerdict(data.result, "OK");
+      setTotalAccepted(okCount);
+      console.log("Total number of results with verdict OK:", okCount);
       setShow(true);
     } catch (error) {
       alert("Invalid handle. Please enter a valid handle.");
@@ -154,6 +171,8 @@ const Home = () => {
             >
               Tags Accuracy for Respective Questions
             </Text>
+            <Text>Total Submissions: {totalQuestion}</Text>
+            <Text>Total Accepted Solutions: {totalAccepted}</Text>
             {ratingInfo != null &&
               ratingTagsInfo.map((data, idx) => {
                 return (
@@ -216,7 +235,7 @@ const Home = () => {
                             return parseInt(accuracy) <=
                               parseInt(
                                 data.ratingObj.datasets[0].data[
-                                Math.floor(data.ratingObj.labels.length / 5)
+                                  Math.floor(data.ratingObj.labels.length / 5)
                                 ]
                               ) || totalSubmission <= threshold ? (
                               <Table.Row key={idx}>
@@ -245,7 +264,7 @@ const Home = () => {
                             return parseInt(accuracy) <=
                               parseInt(
                                 data.ratingObj.datasets[0].data[
-                                Math.floor(data.ratingObj.labels.length / 5)
+                                  Math.floor(data.ratingObj.labels.length / 5)
                                 ]
                               ) || totalSubmission <= threshold ? null : (
                               <Table.Row key={idx}>
@@ -271,7 +290,6 @@ const Home = () => {
               })}
           </Container>
         ) : null}
-
 
         <Text
           h2

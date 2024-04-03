@@ -160,6 +160,22 @@ const Home = () => {
         ) : null}
         {show === true ? (
           <Container>
+            <Container
+              css={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "10px",
+                marginTop: "20px", // Adjust as needed
+              }}
+            >
+              <Text size={20} css={{ marginRight: "20px" }}>
+                Total Submissions: {totalQuestion}
+              </Text>
+              <Text size={20} css={{ color: "green" }}>
+                Total Accepted Solutions: {totalAccepted}
+              </Text>
+            </Container>
             <Text
               h2
               size={50}
@@ -171,8 +187,7 @@ const Home = () => {
             >
               Tags Accuracy for Respective Questions
             </Text>
-            <Text>Total Submissions: {totalQuestion}</Text>
-            <Text>Total Accepted Solutions: {totalAccepted}</Text>
+
             {ratingInfo != null &&
               ratingTagsInfo.map((data, idx) => {
                 return (
